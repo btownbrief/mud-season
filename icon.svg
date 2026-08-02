@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+  <rect width="180" height="180" rx="34" fill="#2b241b"/>
+  <path d="M25 16h130a10 10 0 0 1 10 10v128a10 10 0 0 1-10 10H25a10 10 0 0 1-10-10V26a10 10 0 0 1 10-10z" fill="#9e472a" stroke="#f2e8cf" stroke-width="7"/>
+  <circle cx="31" cy="32" r="4" fill="#e2b39f"/><circle cx="149" cy="32" r="4" fill="#e2b39f"/>
+  <path d="M46 133c15-14 11-35 25-51 9-11 21-15 27-31M134 133c-15-14-11-35-25-51-9-11-21-15-27-31" fill="none" stroke="#5e2b20" stroke-width="12" stroke-linecap="round"/>
+  <path d="M90 45v96" stroke="#f5c843" stroke-width="5" stroke-dasharray="13 10"/>
+  <text x="90" y="45" text-anchor="middle" fill="#fffaf0" font-family="Arial Black,Arial,sans-serif" font-size="19" font-weight="900">MUD</text>
+  <text x="90" y="158" text-anchor="middle" fill="#fffaf0" font-family="Arial Black,Arial,sans-serif" font-size="16" font-weight="900">SEASON</text>
+</svg>

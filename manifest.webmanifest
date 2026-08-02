@@ -1,0 +1,13 @@
+{
+  "name": "Mud Season — A Btown Game",
+  "short_name": "Mud Season",
+  "description": "A Vermont take on the classic trick-taking game Oh Hell.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#17130f",
+  "theme_color": "#221d16",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "icon-180.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

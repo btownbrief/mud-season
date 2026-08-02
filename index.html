@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#221d16">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>MUD SEASON — A Btown Game</title>
+  <meta name="description" content="Bid the muddy roads you can handle in this Vermont take on Oh Hell. Play with bots, pass the phone, or invite a crew online.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MUD SEASON — How many roads can you take?">
+  <meta property="og:description" content="Bid exactly. Follow suit. Don't get stuck. A Vermont card game for 3–4 drivers.">
+  <meta property="og:url" content="https://play.btownbrief.com/mud-season/">
+  <meta property="og:image" content="https://play.btownbrief.com/mud-season/icon-180.png">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="app">
+  <section id="menu" class="screen">
+    <div class="route-sign" aria-label="Mud Season">
+      <span class="sign-kicker">WELCOME TO VERMONT'S</span>
+      <h1>MUD<br>SEASON</h1>
+      <span class="sign-route">FIFTH SEASON · NO DETOURS</span>
+    </div>
+    <p class="tagline">How many stretches of muddy road<br>do you swear you can drive?</p>
+
+    <div class="mode-stack">
+      <div class="mode-card practice-card">
+        <div><b>🚙 PRACTICE RUN</b><small>Mudflap bids loose. Town Plow keeps it tight.</small></div>
+        <div class="count-pills" aria-label="Practice players">
+          <button data-start="practice" data-players="3">3 drivers</button>
+          <button data-start="practice" data-players="4">4 drivers</button>
+        </div>
+      </div>
+      <div class="mode-card pass-card">
+        <div><b>📱 PASS &amp; PLAY</b><small>One phone. No peeking at the next driver's hand.</small></div>
+        <div class="count-pills" aria-label="Pass and play players">
+          <button data-start="pass" data-players="3">3 drivers</button>
+          <button data-start="pass" data-players="4">4 drivers</button>
+        </div>
+      </div>
+      <div class="online-label">OR TAKE THE BACK ROADS — 3 OR 4 PHONES</div>
+      <div class="online-row">
+        <button id="hostBtn" class="mode-button"><b>🛻 START A CREW</b><small>get a road code</small></button>
+        <button id="joinBtn" class="mode-button"><b>🔑 JOIN A CREW</b><small>bring a code</small></button>
+      </div>
+      <button id="rejoinBtn" class="rejoin hidden"></button>
+    </div>
+
+    <button id="helpBtn" class="text-button">HOW TO DRIVE THESE ROADS →</button>
+    <footer>A Btown Games production · <a href="https://play.btownbrief.com/">More games →</a> · <a href="https://www.btownbrief.com">Read the BTown Brief →</a></footer>
+
+    <div id="onlinePanel" class="overlay hidden">
+      <div class="paper-card online-card">
+        <div id="opTitle" class="overlay-title">START A CREW</div>
+        <label for="opName">YOUR ROAD NAME</label>
+        <input id="opName" maxlength="24" autocomplete="nickname" placeholder="Maple Runner">
+        <div id="opSeatsWrap">
+          <label>PHONES IN THE CONVOY</label>
+          <div id="opSeats" class="seat-btns" role="group" aria-label="Phones in the convoy">
+            <button class="seat-btn selected" data-seats="3" aria-pressed="true">3</button>
+            <button class="seat-btn" data-seats="4" aria-pressed="false">4</button>
+          </div>
+        </div>
+        <div id="opCodeWrap" class="hidden">
+          <label for="opCode">ROAD CODE</label>
+          <input id="opCode" maxlength="4" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="MUD4">
+        </div>
+        <div id="opError" class="error hidden" role="alert"></div>
+        <div class="dialog-actions"><button id="opCancel" class="soft-button">BACK</button><button id="opGo" class="action-button">GET A CODE</button></div>
+      </div>
+    </div>
+
+    <div id="lobby" class="overlay hidden">
+      <div class="paper-card online-card">
+        <div class="overlay-title">YOUR ROAD CODE</div>
+        <div id="lobbyCode" aria-label="Road code"></div>
+        <p id="lobbyHint">Share the code with your convoy.</p>
+        <button id="inviteBtn" class="invite-button">📲 SEND AN INVITE</button>
+        <div class="lobby-label">AT THE PULL-OFF</div>
+        <ul id="lobbyNames" aria-live="polite"></ul>
+        <button id="lobbyCancel" class="soft-button">CALL IT OFF</button>
+      </div>
+    </div>
+
+    <div id="help" class="overlay hidden">
+      <div class="paper-card help-card">
+        <button id="helpClose" class="close-button" aria-label="Close rules">×</button>
+        <div class="overlay-title">THE ROAD RULES</div>
+        <p>Each hand is a stretch of Vermont road. Bid how many tricks you’ll take, then try to land on that number exactly.</p>
+        <ol>
+          <li>Hands run <b>7 cards down to 1, then back to 7</b>. A new trump card flips every deal.</li>
+          <li>Follow the suit that was led if you can. Highest trump wins; otherwise the highest card in the led suit takes it.</li>
+          <li><b>Exact bid:</b> 10 points + tricks taken. <b>Miss:</b> only 1 point per trick taken.</li>
+          <li><b>Screw the dealer:</b> the dealer bids last and cannot make everyone’s bids total exactly the number of tricks available.</li>
+        </ol>
+        <button id="helpDone" class="action-button">GOT IT — MIND THE RUTS</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="handoff" class="screen hidden">
+    <div class="handoff-sign">
+      <span class="sign-kicker">NO PEEKING PAST THIS POINT</span>
+      <div class="handoff-icon">🤲</div>
+      <h2 id="handoffTitle">Pass to Driver 1</h2>
+      <p id="handoffText">Their hand is tucked away.</p>
+      <button id="handoffBtn" class="action-button">SHOW MY HAND</button>
+    </div>
+  </section>
+
+  <section id="game" class="screen game-screen hidden">
+    <header class="game-topbar">
+      <button id="homeBtn" class="icon-button" aria-label="Back to menu">←</button>
+      <div id="roundLabel">ROAD 1 OF 13 · 7 CARDS</div>
+      <button id="rulesBtn" class="icon-button" aria-label="How to play">?</button>
+    </header>
+
+    <div id="driverGrid" aria-label="Drivers"></div>
+
+    <div class="table-felt">
+      <div class="trump-post">
+        <span>TRUMP</span>
+        <div id="trumpCard" class="mini-card"></div>
+      </div>
+      <div id="trick" aria-label="Current trick"></div>
+      <div id="trickNote">BID THE ROAD</div>
+    </div>
+
+    <div id="actionZone">
+      <div id="turnBanner">YOUR BID</div>
+      <div id="bidControls" class="hidden">
+        <div class="bid-question">How many muddy stretches can you take?</div>
+        <div id="bidButtons"></div>
+        <div id="dealerHook" class="hook-note hidden">DEALER'S HOOK: one number is blocked.</div>
+      </div>
+      <div id="waitMessage" class="hidden"></div>
+    </div>
+
+    <div id="handArea">
+      <div id="handLabel">YOUR HAND</div>
+      <div id="hand"></div>
+    </div>
+  </section>
+
+  <section id="scoreOverlay" class="overlay score-overlay hidden">
+    <div class="ledger">
+      <div class="ledger-top"><span id="scoreKicker">ROAD COMPLETE</span><span id="scoreRound">7 CARDS</span></div>
+      <h2 id="scoreTitle">THE MUD REPORT</h2>
+      <p id="scoreSub">Promises meet pavement.</p>
+      <div class="score-scroll"><table>
+        <thead><tr><th>DRIVER</th><th>BID</th><th>GOT</th><th>ROAD</th><th>TOTAL</th></tr></thead>
+        <tbody id="scoreBody"></tbody>
+      </table></div>
+      <div id="winnerLine" class="winner-line hidden"></div>
+      <button id="scoreNext" class="action-button">NEXT ROAD →</button>
+      <button id="scoreHome" class="soft-button hidden">BACK TO THE GARAGE</button>
+    </div>
+  </section>
+</main>
+<script type="module" src="js/main.js"></script>
+<script src="https://play.btownbrief.com/ticker.js" defer></script>
+</body>
+</html>
